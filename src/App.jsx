@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import appLogo from '/favicon.svg'
-import PWABadge from './PWABadge.jsx'
 import './App.css'
 
 function App() {
@@ -23,8 +22,6 @@ function App() {
           count is {count}
         </button>
       </div>
-
-      <PWABadge />
     </>
   )
 }
