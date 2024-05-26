@@ -1,26 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import appLogo from '/favicon.svg'
+import addNotification from 'react-push-notification'
 import './App.css'
+import logo from '/icons/192x192.png'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const clickToNotify = () => {
+    addNotification({
+      title: 'To działa!',
+      message: 'To jest treść naszego powiadomienia',
+      duration: 4000,
+      icon: logo,
+      native: true,
+    });
+  }
+
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={appLogo} className="logo" alt="ReactPWA logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
       <h1>ReactPWA</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <br></br>
+        <br></br>
+        <button onClick={clickToNotify}> Wyślij powiadomienie </button>
       </div>
     </>
   )
