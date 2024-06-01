@@ -7,13 +7,15 @@ function App() {
   const [count, setCount] = useState(0)
 
   const clickToNotify = () => {
-    addNotification({
-      title: 'To działa!',
-      message: 'To jest treść naszego powiadomienia',
-      duration: 4000,
-      icon: logo,
-      native: true,
-    });
+    setTimeout(() => {
+      addNotification({
+        title: 'To działa!',
+        message: 'To jest treść naszego powiadomienia',
+        duration: 4000,
+        icon: logo,
+        native: true,
+      });
+    }, 60000); // 60000 milisekund = 1 minuta
   }
 
   return (
