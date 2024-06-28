@@ -17,8 +17,8 @@ export default defineConfig({
         name: 'ReactPWA',
         short_name: 'ReactPWA',
         description: 'Test aplikacji PWA z powiadomieniami',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#000', // Zmień na kolor aplikacji
+        background_color: '#000', // Zmień na kolor aplikacji
         display: 'standalone',
         start_url: '/React/',
         icons: [

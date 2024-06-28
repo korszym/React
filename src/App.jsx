@@ -1,31 +1,42 @@
 import { useState, useEffect } from 'react';
-import addNotification from 'react-push-notification';
 import './App.css';
-import logo from '/icons/192x192.png';
 
 function App() {
-  const [count, setCount] = useState(0);
   const [deviceInfo, setDeviceInfo] = useState({});
+  const [sessionStartTime] = useState(Date.now());
 
   useEffect(() => {
     const getDeviceInfo = async () => {
       const userAgent = navigator.userAgent;
       const browserInfo = getBrowserInfo(userAgent);
-      
+
       const info = {
         userAgent: userAgent,
         browserName: browserInfo.name,
         browserVersion: browserInfo.version,
         platform: navigator.platform,
         language: navigator.language,
+        languages: navigator.languages.join(', '),
         online: navigator.onLine,
         screenWidth: window.screen.width,
         screenHeight: window.screen.height,
         colorDepth: window.screen.colorDepth,
-        deviceMemory: navigator.deviceMemory || 'N/A', // Some browsers support this
-        hardwareConcurrency: navigator.hardwareConcurrency || 'N/A', // Some browsers support this
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        deviceMemory: navigator.deviceMemory || 'N/A',
+        hardwareConcurrency: navigator.hardwareConcurrency || 'N/A',
         orientation: window.screen.orientation ? window.screen.orientation.type : 'N/A',
         prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        cookieEnabled: navigator.cookieEnabled,
+        javaEnabled: navigator.javaEnabled(),
+        plugins: Array.from(navigator.plugins).map(plugin => plugin.name).join(', '),
+        geolocation: 'N/A',
+        uptime: Math.floor(performance.now() / 1000) + ' seconds',
+        localTime: new Date().toLocaleString(),
+        touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0 ? 'Yes' : 'No',
+        // Initializing audio and video support fields
+        supportedAudioFormats: getSupportedAudioFormats(),
+        supportedVideoFormats: getSupportedVideoFormats(),
       };
 
       // Detect color scheme
@@ -35,7 +46,7 @@ function App() {
       // Listen for color scheme changes
       const handleColorSchemeChange = (e) => {
         info.colorScheme = e.matches ? 'dark' : 'light';
-        setDeviceInfo({ ...info }); // Update state with new color scheme
+        setDeviceInfo({ ...info });
       };
       mediaQuery.addEventListener('change', handleColorSchemeChange);
 
@@ -47,6 +58,31 @@ function App() {
       } else {
         info.batteryLevel = 'N/A';
         info.batteryCharging = 'N/A';
+      }
+
+      // Get network information if available
+      if (navigator.connection) {
+        info.networkType = navigator.connection.effectiveType;
+        info.downlink = navigator.connection.downlink + ' Mbps';
+        info.rtt = navigator.connection.rtt + ' ms';
+      } else {
+        info.networkType = 'N/A';
+        info.downlink = 'N/A';
+        info.rtt = 'N/A';
+      }
+
+      // Get geolocation information if available
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            info.geolocation = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+            setDeviceInfo({ ...info });
+          },
+          (error) => {
+            console.error(error);
+            setDeviceInfo({ ...info });
+          }
+        );
       }
 
       setDeviceInfo(info);
@@ -84,43 +120,37 @@ function App() {
       return { name, version };
     };
 
+    const getSupportedAudioFormats = () => {
+      const audio = document.createElement('audio');
+      return {
+        mp3: audio.canPlayType('audio/mpeg') ? 'Supported' : 'Not supported',
+        wav: audio.canPlayType('audio/wav') ? 'Supported' : 'Not supported',
+        ogg: audio.canPlayType('audio/ogg') ? 'Supported' : 'Not supported',
+      };
+    };
+
+    const getSupportedVideoFormats = () => {
+      const video = document.createElement('video');
+      return {
+        mp4: video.canPlayType('video/mp4') ? 'Supported' : 'Not supported',
+        webm: video.canPlayType('video/webm') ? 'Supported' : 'Not supported',
+        ogg: video.canPlayType('video/ogg') ? 'Supported' : 'Not supported',
+      };
+    };
+
     getDeviceInfo();
   }, []);
 
-  const clickToNotify = () => {
-    setTimeout(() => {
-      addNotification({
-        title: 'To działa!',
-        message: 'To jest treść naszego powiadomienia',
-        duration: 4000,
-        icon: logo,
-        native: true,
-      });
-    }, 60000); // 60000 milisekund = 1 minuta
-  };
-
   return (
     <>
-      <div>
-      </div>
-      <h1>ReactPWA</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <br /><br />
-        <button onClick={clickToNotify}>Wyślij powiadomienie</button>
-      </div>
-      <div>
-        <h2>Informacje o urządzeniu:</h2>
-        <ul>
-          {Object.entries(deviceInfo).map(([key, value]) => (
-            <li key={key}>
-              <strong>{key}:</strong> {value}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h1>Informacje o urządzeniu:</h1>
+      <ul>
+        {Object.entries(deviceInfo).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}:</strong> {typeof value === 'object' ? JSON.stringify(value) : value}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
