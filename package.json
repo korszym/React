@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "react": "^18.3.1",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.3.1",
-    "react-push-notification": "^1.5.4"
+    "react-push-notification": "^1.5.4",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@types/react": "^18.3.1",

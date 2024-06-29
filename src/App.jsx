@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import Tabelka from './assets/components/table';
 
 function App() {
   const [deviceInfo, setDeviceInfo] = useState({});
@@ -143,6 +144,8 @@ function App() {
 
   return (
     <>
+      <h1>Tabela</h1>
+      <Tabelka></Tabelka>
       <h1>Informacje o urządzeniu:</h1>
       <ul>
         {Object.entries(deviceInfo).map(([key, value]) => (
