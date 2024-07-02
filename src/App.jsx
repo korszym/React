@@ -7,11 +7,11 @@ import Contact from './assets/pages/Contact';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/React">
       <div>
         <Navbar />
         <Routes>
-          <Route path="/React" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>

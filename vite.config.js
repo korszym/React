@@ -11,16 +11,16 @@ export default defineConfig({
     mkcert(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: false,
+      injectRegister: 'auto',
       includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
         name: 'ReactPWA',
         short_name: 'ReactPWA',
         description: 'Test aplikacji PWA z powiadomieniami',
-        theme_color: '#242424', // Zmień na kolor aplikacji
-        background_color: '#242424', // Zmień na kolor aplikacji
+        theme_color: '#242424',
+        background_color: '#242424',
         display: 'standalone',
-        start_url: '/React/',
+        start_url: '/React/', // Ustaw poprawną ścieżkę startową
         icons: [
           {
             src: 'icons/192x192.png',
