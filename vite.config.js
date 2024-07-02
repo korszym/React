@@ -3,9 +3,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import mkcert from 'vite-plugin-mkcert';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/React/', // Ustaw tutaj ścieżkę bazową repozytorium
+  base: '/React/',
   plugins: [
     react(),
     mkcert(),
@@ -20,7 +19,7 @@ export default defineConfig({
         theme_color: '#242424',
         background_color: '#242424',
         display: 'standalone',
-        start_url: '/React/', // Ustaw poprawną ścieżkę startową
+        start_url: '/React/',
         icons: [
           {
             src: 'icons/192x192.png',

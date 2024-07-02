@@ -2,7 +2,7 @@
   "homepage": "https://korszym.github.io/React/",
   "name": "reactpwa",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
