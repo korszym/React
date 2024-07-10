@@ -32,11 +32,11 @@ const Main = () => {
   });
 
   return (
-    <>
+    <div>
       <App />
       {showUpdate && <UpdateNotification onUpdate={handleUpdate} />}
       <Footer />  {/* Dodanie komponentu Footer */}
-    </>
+    </div>
   );
 };
 

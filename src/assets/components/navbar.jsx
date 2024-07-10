@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ currentPath }) => {
   return (
     <nav>
       <ul>
-        <li>
+        <li className={currentPath === '/' ? 'active' : ''}>
           <Link to="//">Home</Link>
         </li>
-        <li>
+        <li className={currentPath === '/about' ? 'active' : ''}>
           <Link to="/about">O nas</Link>
         </li>
-        <li>
-          <Link to="/contact">Contact</Link>
+        <li className={currentPath === '/contact' ? 'active' : ''}>
+          <Link to="/contact">Latarka</Link>
         </li>
       </ul>
     </nav>

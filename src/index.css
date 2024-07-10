@@ -1,10 +1,48 @@
 body {
   background-color: black;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 a {
   color: #fff;
+}
+
+nav {
+}
+
+nav > ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 20px 0;
+}
+
+nav > ul > li {
+  padding: 10px 20px;
+}
+
+nav > ul > li.active {
+  background-color: white;
+  color: black;
+}
+
+nav > ul > li.active a {
+  color: black;
+}
+
+nav > ul > li a {
+  text-decoration: none;
+  font-size: 5vw;
+}
+
+@media screen and (min-width: 550px) {
+
+  nav > ul > li a {
+    text-decoration: none;
+    font-size: 25px;
+  }
+
+}
+
+.mainbody {
+  padding: 20px;
 }
