@@ -10,18 +10,18 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div>
+    <>
       <Navbar currentPath={location.pathname} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/React/" element={<Home />} />
+        <Route path="/React/about" element={<About />} />
         {isMobile ? (
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/React/contact" element={<Contact />} />
         ) : (
-          <Route path="/contact" element={<Navigate to="/" />} />
+          <Route path="/React/contact" element={<Navigate to="/React/" />} />
         )}
       </Routes>
-    </div>
+    </>
   );
 };
 

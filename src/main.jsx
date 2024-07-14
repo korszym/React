@@ -4,7 +4,6 @@ import App from './App';
 import './index.css';
 import { registerSW } from 'virtual:pwa-register';
 import UpdateNotification from './assets/components/UpdateNotification';
-import Footer from './assets/components/Footer';  // Importowanie komponentu Footer
 
 const Main = () => {
   const [showUpdate, setShowUpdate] = useState(false);
@@ -35,7 +34,6 @@ const Main = () => {
     <div>
       <App />
       {showUpdate && <UpdateNotification onUpdate={handleUpdate} />}
-      <Footer />  {/* Dodanie komponentu Footer */}
     </div>
   );
 };

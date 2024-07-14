@@ -5,14 +5,14 @@ const Navbar = ({ currentPath }) => {
   return (
     <nav>
       <ul>
-        <li className={currentPath === '/' ? 'active' : ''}>
-          <Link to="//">Home</Link>
+        <li className={currentPath === '/React/' ? 'active' : ''}>
+          <Link to="/React/">Home</Link>
         </li>
-        <li className={currentPath === '/about' ? 'active' : ''}>
-          <Link to="/about">O nas</Link>
+        <li className={currentPath === '/React/about' ? 'active' : ''}>
+          <Link to="/React/about">O nas</Link>
         </li>
-        <li className={currentPath === '/contact' ? 'active' : ''}>
-          <Link to="/contact">Latarka</Link>
+        <li className={currentPath === '/React/contact' ? 'active' : ''}>
+          <Link to="/React/contact">Latarka</Link>
         </li>
       </ul>
     </nav>

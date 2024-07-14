@@ -1,12 +1,10 @@
 body {
   background-color: black;
   color: #fff;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 a {
   color: #fff;
-}
-
-nav {
 }
 
 nav > ul {
@@ -18,10 +16,13 @@ nav > ul {
 
 nav > ul > li {
   padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.7s;
 }
 
 nav > ul > li.active {
   background-color: white;
+  transition: 0.7s;
   color: black;
 }
 
