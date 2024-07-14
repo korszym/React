@@ -1,45 +1,52 @@
+// Modal.js
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import './Modal.css';
+import { motion } from 'framer-motion';
 
 const backdropVariants = {
-  visible: { opacity: 0.5 },
+  visible: { opacity: 1 },
   hidden: { opacity: 0 },
 };
 
 const modalVariants = {
-  hidden: { y: '-100vh', opacity: 0 },
-  visible: { y: '0', opacity: 1, transition: { delay: 0.5 } },
-  exit: { y: '100vh', opacity: 0 },
+  hidden: {
+    opacity: 0,
+    y: "-100vh",
+  },
+  visible: {
+    opacity: 1,
+    y: "0",
+    transition: { delay: 0.5 },
+  },
 };
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ showModal, setShowModal }) => {
   return (
-    <AnimatePresence mode="wait">
-      {isOpen && (
-        <>
-          <motion.div
-            className="backdrop"
-            variants={backdropVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            onClick={onClose}
-          />
+    <>
+      {showModal && (
+        <motion.div
+          className="backdrop"
+          variants={backdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          onClick={() => setShowModal(false)}
+        >
           <motion.div
             className="modal"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
-            exit="exit"
+            exit="hidden"
           >
-            <h2>Modal Title</h2>
-            <p>This is a modal with some content and animations.</p>
-            <button onClick={onClose}>Close</button>
+            <h1>Siema, to modal!</h1>
+            <p>Przykład modala z Framer Motion!</p>
+            <p><a href="https://www.framer.com/motion/" target='blank'>Strona z animacjami</a></p>
+
+            <button onClick={() => setShowModal(false)}>Zamknij</button>
           </motion.div>
-        </>
+        </motion.div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 

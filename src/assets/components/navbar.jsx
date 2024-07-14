@@ -6,10 +6,10 @@ const Navbar = ({ currentPath }) => {
     <nav>
       <ul>
         <li className={currentPath === '/React/' ? 'active' : ''}>
-          <Link to="/React/">Home</Link>
+          <Link to="/React/">Start</Link>
         </li>
         <li className={currentPath === '/React/about' ? 'active' : ''}>
-          <Link to="/React/about">O nas</Link>
+          <Link to="/React/about">Modal</Link>
         </li>
         <li className={currentPath === '/React/contact' ? 'active' : ''}>
           <Link to="/React/contact">Latarka</Link>

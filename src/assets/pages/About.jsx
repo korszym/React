@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Modal from '../components/modal';
 
 const About = () => {
+
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <motion.div
       className='mainbody'
@@ -9,8 +13,14 @@ const About = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
     >
-      <h1>About Page</h1>
-      <p>Learn more about us on this page.</p>
+      <h1>Modal</h1>
+      <p>Przykład animowanego modala</p>
+
+      <div className="App">
+      <button onClick={() => setShowModal(true)}>Otwórz modal</button>
+      <Modal showModal={showModal} setShowModal={setShowModal} />
+    </div>
+
     </motion.div>
   );
 };
