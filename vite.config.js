@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import mkcert from 'vite-plugin-mkcert';
 
 export default defineConfig({
-  base: '/React/React/',
+  base: '/React/',
   plugins: [
     react(),
     mkcert(),
