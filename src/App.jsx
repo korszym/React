@@ -20,6 +20,8 @@ const App = () => {
         ) : (
           <Route path="/React/contact" element={<Navigate to="/React/" />} />
         )}
+        {/* Default route */}
+        <Route path="*" element={<Navigate to="/React/" />} />
       </Routes>
     </>
   );
