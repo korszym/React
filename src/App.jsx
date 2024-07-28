@@ -26,7 +26,7 @@ const App = () => {
 };
 
 const AppWrapper = () => (
-  <Router basename="/React">
+  <Router basename="/React/">
     <App />
   </Router>
 );
