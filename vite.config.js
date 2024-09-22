@@ -18,7 +18,7 @@ export default defineConfig({
         description: 'Test aplikacji PWA z powiadomieniami',
         theme_color: '#242424',
         background_color: '#242424',
-        display: 'standalone',
+        display: 'fullscreen',
         start_url: '/React/',
         icons: [
           {
