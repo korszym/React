@@ -35,46 +35,59 @@ const CameraReader = () => {
     if (videoRef.current) {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
-      if (context) {
-        const overlay = document.getElementById('overlay-box');
-        if (overlay && videoRef.current) {
-          const { offsetWidth, offsetHeight, offsetLeft, offsetTop } = overlay;
+      const overlay = document.getElementById('overlay-box');
 
-          // Ustawienia rozmiaru płótna na podstawie nakładki
-          console.log('Canvas size:', offsetWidth, offsetHeight);
-          canvas.width = offsetWidth;
-          canvas.height = offsetHeight;
+      if (context && overlay && videoRef.current) {
+        // Ustawienia rozmiaru płótna na podstawie nakładki
+        const { offsetWidth, offsetHeight } = overlay;
+        const { videoWidth, videoHeight } = videoRef.current;
 
-          // Rysowanie obrazu z wideo na płótnie (tylko wybrany obszar)
-          context.drawImage(
-            videoRef.current,
-            offsetLeft,
-            offsetTop,
-            offsetWidth,
-            offsetHeight,
-            0,
-            0,
-            offsetWidth,
-            offsetHeight
-          );
+        // Dopasowanie płótna do wymiarów nakładki
+        canvas.width = offsetWidth;
+        canvas.height = offsetHeight;
 
-          console.log('Canvas has been drawn.');
+        // Oblicz współczynniki skalowania, aby odpowiednio dopasować rozmiar nakładki do wideo
+        const scaleX = videoWidth / videoRef.current.clientWidth;
+        const scaleY = videoHeight / videoRef.current.clientHeight;
 
-          try {
-            // Rozpoznawanie tekstu z płótna
-            const { data: { text } } = await Tesseract.recognize(canvas, 'eng', {
-              tessedit_char_whitelist: '0123456789' // Ograniczenie rozpoznawania do cyfr
-            });
-            console.log('Recognized text:', text);
-            setRecognizedText(text);
-          } catch (error) {
-            console.error('Error recognizing text:', error);
-          }
-        } else {
-          console.error('Overlay or video element not found.');
+        const overlayRect = overlay.getBoundingClientRect();
+        const videoRect = videoRef.current.getBoundingClientRect();
+
+        // Obliczanie pozycji nakładki w odniesieniu do obrazu wideo
+        const x = (overlayRect.left - videoRect.left) * scaleX;
+        const y = (overlayRect.top - videoRect.top) * scaleY;
+        const width = overlayRect.width * scaleX;
+        const height = overlayRect.height * scaleY;
+
+        // Rysowanie odpowiedniego obszaru wideo na płótnie
+        context.drawImage(
+          videoRef.current,
+          x,
+          y,
+          width,
+          height,
+          0,
+          0,
+          offsetWidth,
+          offsetHeight
+        );
+
+        console.log('Canvas has been drawn.');
+
+        try {
+          // Rozpoznawanie tekstu z płótna - tylko cyfry
+          const { data: { text } } = await Tesseract.recognize(canvas, 'eng', {
+            tessedit_char_whitelist: '0123456789' // Ograniczenie rozpoznawania do cyfr
+          });
+          console.log('Recognized text:', text);
+          // Filtracja wyników - pozostawienie tylko liczb
+          const filteredText = text.replace(/[^0-9]/g, '');
+          setRecognizedText(filteredText);
+        } catch (error) {
+          console.error('Error recognizing text:', error);
         }
       } else {
-        console.error('Canvas context not created.');
+        console.error('Overlay or video element not found, or canvas context not created.');
       }
     }
   };
