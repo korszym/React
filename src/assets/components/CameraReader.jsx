@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Tesseract from 'tesseract.js';
-import './CameraReader.css';
 
 const CameraReader = () => {
   const videoRef = useRef(null);
