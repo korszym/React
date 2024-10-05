@@ -1,11 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Tesseract from 'tesseract.js';
+import './CameraReader.css';
 
 const CameraReader = () => {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const [recognizedText, setRecognizedText] = useState('');
 
   useEffect(() => {
+    // Wyłączenie kamery po odmontowaniu komponentu
     return () => {
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
@@ -15,7 +18,10 @@ const CameraReader = () => {
 
   const openCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // Ustawienia do przełączenia na tylną kamerę
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" }
+      });
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -34,8 +40,13 @@ const CameraReader = () => {
         const overlay = document.getElementById('overlay-box');
         if (overlay && videoRef.current) {
           const { offsetWidth, offsetHeight, offsetLeft, offsetTop } = overlay;
+
+          // Ustawienia rozmiaru płótna na podstawie nakładki
+          console.log('Canvas size:', offsetWidth, offsetHeight);
           canvas.width = offsetWidth;
           canvas.height = offsetHeight;
+
+          // Rysowanie obrazu z wideo na płótnie (tylko wybrany obszar)
           context.drawImage(
             videoRef.current,
             offsetLeft,
@@ -47,11 +58,24 @@ const CameraReader = () => {
             offsetWidth,
             offsetHeight
           );
-          const { data: { text } } = await Tesseract.recognize(canvas, 'eng', {
-            tessedit_char_whitelist: '0123456789'
-          });
-          console.log('Recognized text:', text);
+
+          console.log('Canvas has been drawn.');
+
+          try {
+            // Rozpoznawanie tekstu z płótna
+            const { data: { text } } = await Tesseract.recognize(canvas, 'eng', {
+              tessedit_char_whitelist: '0123456789' // Ograniczenie rozpoznawania do cyfr
+            });
+            console.log('Recognized text:', text);
+            setRecognizedText(text);
+          } catch (error) {
+            console.error('Error recognizing text:', error);
+          }
+        } else {
+          console.error('Overlay or video element not found.');
         }
+      } else {
+        console.error('Canvas context not created.');
       }
     }
   };
@@ -66,6 +90,9 @@ const CameraReader = () => {
         </div>
       </div>
       <button onClick={recognizeText}>Rozpoznaj cyfry</button>
+      <div>
+        <h3>Rozpoznane liczby: {recognizedText}</h3>
+      </div>
     </div>
   );
 };
