@@ -56,3 +56,39 @@ button {
   display: flex;
   justify-content: flex-end;
 }
+
+.camera-reader-container {
+  position: relative;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #00ff00;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Flashlight from '../components/flashlight';
+import CameraReader from '../components/CameraReader';
 
 const Contact = () => {
   return (
@@ -13,6 +14,9 @@ const Contact = () => {
       <h1>Latarka</h1>
       <p>Przykład użycia latarki</p>
       <Flashlight></Flashlight>
+
+      <h2>Odczyt liczb za pomocą aparatu</h2>
+    <CameraReader />
     </motion.div>
   );
 };
